@@ -1,10 +1,12 @@
 
 let btn=document.querySelector("button");
 let headingRes=document.querySelector(".result");
+let sc=document.querySelector(".score");
+let res=document.querySelector(".reset")
 btn.addEventListener("click",play);
+res.addEventListener("click",resetScore);
 
-
-
+let score=0;
 function getComputerChoice(){
     
     let index=Math.floor(Math.random() * 3);
@@ -53,15 +55,18 @@ function play(){
 
     if(result==1){
         headingRes.textContent="Congratulations! You Won";
+        score++; 
     }
     else if(result==0){
         headingRes.textContent="Better luck next time";
+        score--;
     }
     else{
         headingRes.textContent="It is a draw!";   
     }
-
-
-
-
+    sc.textContent=`Your Score is : ${score} `;
+}
+function resetScore(){
+    score=0;
+    sc.textContent=`Your Score is : ${score} `;
 }
