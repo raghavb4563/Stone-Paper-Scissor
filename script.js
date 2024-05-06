@@ -1,72 +1,110 @@
 
-let btn=document.querySelector("button");
-let headingRes=document.querySelector(".result");
-let sc=document.querySelector(".score");
-let res=document.querySelector(".reset")
-btn.addEventListener("click",play);
-res.addEventListener("click",resetScore);
+let btn=document.querySelector(".new_round");
 
-let score=0;
+let Stone=document.querySelector("#Stone");
+let Paper=document.querySelector("#Paper");
+let Scissor=document.querySelector("#Scissor");
+
+let user_sc=document.querySelector(".user_score");
+let computer_sc=document.querySelector(".computer_score");
+let choices=document.querySelector(".choices")
+
+let headingRes=document.querySelector(".winner");
+
+let user_score=0;
+let computer_score=0;
+let turn=0;
+
+btn.addEventListener("click",resetScore);
+
+Stone.addEventListener("click",userStone);
+Paper.addEventListener("click",userPaper);
+Scissor.addEventListener("click",userScissor);
+
 function getComputerChoice(){
     
     let index=Math.floor(Math.random() * 3);
-    let choices=["Rock" , "Paper" , "Scissor"];
+    let choices=["Stone" , "Paper" , "Scissor"];
     return choices[index];
 }
+function userStone(){
+    console.log("Hello Stone")
 
-function getHumanChoice(){
-    let HumanChoice=prompt("Choose a option from Rock, Paper or Scissor");
-    return HumanChoice;
+    computerChoice=getComputerChoice();
+
+    if(computerChoice=="Scissor"){
+        user_score+=1;
+    }
+    else if(computerChoice=="Paper"){
+        computer_score+=1;
+    }
+    turn+=1;
+    user_sc.textContent=`Your Score : ${user_score} `;
+    computer_sc.textContent=`Computer Score : ${computer_score} `;
+    choices.textContent=`Stone versus ${computerChoice} `;
+    headingRes.textContent="You are playing well";
+    if(turn==5){
+        declare_result();
+    }
 }
 
-function play(){
-    let userChoice=getHumanChoice();
-    let computerChoice=getComputerChoice();
-    console.log(computerChoice);
-    
-    let result=-1;
+function userPaper(){
 
-    
-    if(userChoice=="Rock"){
-        if(computerChoice=="Scissor"){
-            result=1;
-        }
-        else if(computerChoice=="Paper"){
-            result=0;
-        }
-    }
-    else if(userChoice=="Scissor"){
-        if(computerChoice=="Paper"){
-            result=1;
-        }
-        else if(computerChoice=="Rock"){
-            result=0;
-        }
+    computerChoice=getComputerChoice();
 
+    if(computerChoice=="Stone"){
+        user_score+=1;
     }
-    else{
-        if(computerChoice=="Rock"){
-            result=1;
-        }
-        else if(computerChoice=="Scissor"){
-            result=0;
-        }
+    else if(computerChoice=="Scissor"){
+        computer_score+=1;
     }
-
-    if(result==1){
-        headingRes.textContent="Congratulations! You Won";
-        score++; 
+    turn+=1;
+    user_sc.textContent=`Your Score : ${user_score} `;
+    computer_sc.textContent=`Computer Score : ${computer_score} `;
+    choices.textContent=`Paper versus ${computerChoice} `;
+    headingRes.textContent="You are playing well";
+    if(turn==5){
+        declare_result();
     }
-    else if(result==0){
-        headingRes.textContent="Better luck next time";
-        score--;
-    }
-    else{
-        headingRes.textContent="It is a draw!";   
-    }
-    sc.textContent=`Your Score is : ${score} `;
 }
+
+function userScissor(){
+
+    computerChoice=getComputerChoice();
+
+    if(computerChoice=="Paper"){
+        user_score+=1;
+    }
+    else if(computerChoice=="Stone"){
+        computer_score+=1;
+    }
+    turn+=1;
+    user_sc.textContent=`Your Score : ${user_score} `;
+    computer_sc.textContent=`Computer Score : ${computer_score} `;
+    choices.textContent=`Scissor versus ${computerChoice} `;
+    headingRes.textContent="You are playing well";
+    if(turn==5){
+        declare_result();
+    }
+}
+
+function declare_result(){
+    if(user_score > computer_score){
+        headingRes.textContent="You Won!"
+    }
+    else if(computer_score > user_score){
+        headingRes.textContent="You Lose!";
+    }
+    else{
+        headingRes.textContent="It is a draw"
+    }
+}
+
 function resetScore(){
-    score=0;
-    sc.textContent=`Your Score is : ${score} `;
+    user_score=0;
+    computer_score=0;
+    turn=0;
+    user_sc.textContent=`Your Score is : ${user_score} `;
+    computer_sc.textContent=`Computer Score is : ${computer_score} `;
+    headingRes.textContent="All the best";
 }
